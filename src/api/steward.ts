@@ -1,23 +1,36 @@
 import axios from '../https';
+import { loginUser } from '../utils/loginFormValidate';
 
 const url = {
+    login: '/api/user/login',
+    register: `/api/user/register`,
     getJdChart: '/api/chart/jd',
     getJdCalculationChart: '/api/chart/jdCalculation',
     getAllJdCalculation: `/api/table/jd`,
-    getJdCalculationById: `/api/v2/getJdCalculation`,
+    getJdCalculationById: `/api/detail/getJdCalculation`,
     getJdGoods: `/api/monito/jd/getgoods`,
     delJdGoods: `/api/monito/jd/delgoods`,
     addJdGoods: `/api/monito/jd/addgoods`,
-    getJdGoodsById: `/api/v2/JdGoodsInfo`,
+    getJdGoodsById: `/api/detail/JdGoodsInfo`,
     getTmChart: '/api/chart/tm',
     getTmCalculationChart: '/api/chart/tmCalculation',
     getAllTmCalculation: `/api/table/tm`,
-    getTmCalculationById: `/api/v2/getTmCalculation`,
+    getTmCalculationById: `/api/detail/getTmCalculation`,
     getTmGoods: `/api/monito/tm/getgoods`,
     delTmGoods: `/api/monito/tm/delgoods`,
     addTmGoods: `/api/monito/tm/addgoods`,
-    getTmGoodsById: `/api/v2/TmGoodsInfo`,
+    getTmGoodsById: `/api/detail/TmGoodsInfo`,
 };
+
+export async function userLogin(info) {
+    const { data } = await axios.post(url.login, info);
+    return data;
+}
+
+export async function userRegister(info) {
+    const { data } = await axios.post(url.register, info);
+    return data;
+}
 
 export async function getJdChart() {
     const { data } = await axios.get(url.getJdChart);

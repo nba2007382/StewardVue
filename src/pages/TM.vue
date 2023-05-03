@@ -2,9 +2,7 @@
 <template>
     <section>
         <div class="container">
-            <div class="header">
-                <navfrom />
-            </div>
+            <div class="header"></div>
             <div class="main">
                 <show :option1="TmOption" :id-name="['Chart1']" />
                 <TmPanel />
@@ -24,13 +22,12 @@
 </template>
 
 <script lang="ts">
-import navfrom from '../components/navfrom.vue';
 import show from '../components/show.vue';
 import TmPanel from '../components/tmPanel.vue';
 import { getAllTmCalculation, getTmChart } from '../api/steward';
 import { onMounted, ref } from 'vue';
 export default {
-    components: { navfrom, TmPanel, show },
+    components: { TmPanel, show },
 
     setup() {
         const TmOption = ref({
@@ -125,7 +122,7 @@ export default {
 .header {
     height: 805px;
     width: 100%;
-    background-image: url('/src/assets/background/veer-305178880.jpg');
+    background-image: url('/src/assets/background/tmall.jpg');
     background-size: 100% 100%;
 }
 .nav-banner {

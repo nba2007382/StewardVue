@@ -1,82 +1,72 @@
 <template>
-    <div class="common-layout">
-        <el-container>
-            <el-header>
-                <navfrom />
-            </el-header>
-            <el-main>
+    <el-main>
+        <el-row justify="center">
+            <div
+                class="box"
+                :style="{
+                    borderRadius: `var(--el-border-radius-base)`,
+                    boxShadow: `var(--el-box-shadow-lighter)`,
+                }"
+            >
                 <el-row justify="center">
-                    <div
-                        class="box"
-                        :style="{
-                            borderRadius: `var(--el-border-radius-base)`,
-                            boxShadow: `var(--el-box-shadow-lighter)`,
-                        }"
-                    >
-                        <el-row justify="center">
-                            <div class="item">
-                                <div v-if="goodsInfo" class="itemInfo">
-                                    <el-row justify="center">
-                                        <div
-                                            class="img"
-                                            :style="{
-                                                borderRadius: `var(--el-border-radius-base)`,
-                                                boxShadow: `var(--el-box-shadow-lighter)`,
-                                            }"
-                                        >
-                                            <img
-                                                :style="{
-                                                    borderRadius: `var(--el-border-radius-base)`,
-                                                }"
-                                                :src="goodsInfo.img"
-                                                :alt="goodsInfo.title"
-                                            />
-                                        </div>
-                                        <span class="title"
-                                            ><span>{{
-                                                goodsInfo.title
-                                            }}</span></span
-                                        >
-                                        <span class="price" style="color: red"
-                                            ><span
-                                                >{{ goodsInfo.label }}：{{
-                                                    goodsInfo.price[
-                                                        goodsInfo.price.length -
-                                                            1
-                                                    ]
-                                                }}</span
-                                            ></span
-                                        >
-                                        <span class="href"
-                                            ><a :href="goodsInfo.href"
-                                                >立即前往</a
-                                            ></span
-                                        >
-                                    </el-row>
-                                </div>
-                            </div>
-                            <div class="chartbox">
-                                <el-row justify="center">
-                                    <div
-                                        id="chart"
+                    <div class="item">
+                        <div v-if="goodsInfo" class="itemInfo">
+                            <el-row justify="center">
+                                <div
+                                    class="img"
+                                    :style="{
+                                        borderRadius: `var(--el-border-radius-base)`,
+                                        boxShadow: `var(--el-box-shadow-lighter)`,
+                                    }"
+                                >
+                                    <img
                                         :style="{
                                             borderRadius: `var(--el-border-radius-base)`,
-                                            boxShadow: `var(--el-box-shadow-lighter)`,
                                         }"
-                                    ></div>
-                                    <show
-                                        class="chartbox goodsevaluate"
-                                        :option1="calOption"
-                                        :id-name="['Chart1']"
+                                        :src="goodsInfo.img"
+                                        :alt="goodsInfo.title"
                                     />
-                                </el-row>
-                            </div>
+                                </div>
+                                <span class="title"
+                                    ><span>{{ goodsInfo.title }}</span></span
+                                >
+                                <span class="price" style="color: red"
+                                    ><span
+                                        >{{ goodsInfo.label }}：{{
+                                            goodsInfo.price[
+                                                goodsInfo.price.length - 1
+                                            ]
+                                        }}</span
+                                    ></span
+                                >
+                                <span class="href"
+                                    ><a :href="goodsInfo.href"
+                                        >立即前往</a
+                                    ></span
+                                >
+                            </el-row>
+                        </div>
+                    </div>
+                    <div class="chartbox">
+                        <el-row justify="center">
+                            <div
+                                id="chart"
+                                :style="{
+                                    borderRadius: `var(--el-border-radius-base)`,
+                                    boxShadow: `var(--el-box-shadow-lighter)`,
+                                }"
+                            ></div>
+                            <show
+                                class="chartbox goodsevaluate"
+                                :option1="calOption"
+                                :id-name="['Chart1']"
+                            />
                         </el-row>
                     </div>
                 </el-row>
-            </el-main>
-        </el-container>
-    </div>
+            </div>
+        </el-row>
+    </el-main>
 </template>
 
 <script lang="ts">
@@ -89,7 +79,7 @@ import {
     getTmCalculationById,
     getTmGoodsById,
 } from '../api/steward';
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref } from 'vue';
 import show from '../components/show.vue';
 export default {
     components: { navfrom, show },
@@ -129,30 +119,32 @@ export default {
             series: [],
         });
 
-        onMounted(async () => {
-            const info = isJD
-                ? await getJdGoodsById(route.query.id)
-                : await getTmGoodsById(route.query.id);
-            goodsInfo.value = info.goodsInfo;
-            runChart(goodsInfo);
-            const { data } = isJD
-                ? await getJdCalculationById(route.query.id as string)
-                : await getTmCalculationById(route.query.id as string);
-            const legend = [];
-            let xAxis = [];
-            const series = Object.keys(data).map((el) => {
-                const obj = {
-                    name: el,
-                    type: 'line',
-                    data: data[el].data.map(parseFloat),
-                };
-                legend.push(el);
-                xAxis = data[el].time;
-                return obj;
+        onMounted(() => {
+            nextTick(async () => {
+                const info = isJD
+                    ? await getJdGoodsById(route.query.id)
+                    : await getTmGoodsById(route.query.id);
+                goodsInfo.value = info.goodsInfo;
+                runChart(goodsInfo);
+                const { data } = isJD
+                    ? await getJdCalculationById(route.query.id as string)
+                    : await getTmCalculationById(route.query.id as string);
+                const legend = [];
+                let xAxis = [];
+                const series = Object.keys(data).map((el) => {
+                    const obj = {
+                        name: el,
+                        type: 'line',
+                        data: data[el].data.map(parseFloat),
+                    };
+                    legend.push(el);
+                    xAxis = data[el].time;
+                    return obj;
+                });
+                calOption.value.legend.data = legend;
+                calOption.value.xAxis.data = xAxis;
+                calOption.value.series = series;
             });
-            calOption.value.legend.data = legend;
-            calOption.value.xAxis.data = xAxis;
-            calOption.value.series = series;
         });
 
         function runChart(data) {

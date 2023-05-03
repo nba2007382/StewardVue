@@ -7,27 +7,22 @@
 
 <script lang="ts">
 import * as echarts from 'echarts';
-import { onMounted, getCurrentInstance, nextTick } from '@vue/runtime-core';
+import { onMounted, watch } from '@vue/runtime-core';
 export default {
     props: {
         idName: Array,
         option1: { type: Object },
     },
     setup(props) {
-        onMounted(() => {
-            nextTick(() => {
-                let waitChart = setInterval(() => {
-                    if (props.option1) {
-                        console.log(props.option1);
+        watch(props.option1, () => {
+            if (props.option1) {
+                console.log(props.option1);
 
-                        let myChart = echarts.init(
-                            document.getElementById(props.idName[0] as any),
-                        );
-                        myChart.setOption(props.option1);
-                        clearInterval(waitChart);
-                    }
-                }, 500);
-            });
+                let myChart = echarts.init(
+                    document.getElementById(props.idName[0] as any),
+                );
+                myChart.setOption(props.option1);
+            }
         });
         return {};
     },

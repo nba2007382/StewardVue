@@ -46,14 +46,33 @@
                 >
             </el-sub-menu>
         </el-menu>
-        <loginfrom
+        <div
             v-if="num"
             style="
-                margin-top: 20%;
-                margin-left: 50%;
-                transform: translate(-50%, -50%);
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                overflow: auto;
+                z-index: 99999;
+                background-color: rgba(0, 0, 0, 0.5);
             "
-        />
+            @click="display()"
+        >
+            <loginfrom
+                style="
+                    margin-top: 20%;
+                    margin-left: 50%;
+                    transform: translate(-50%, -50%);
+                "
+                @click="
+                    (e) => {
+                        e.stopPropagation();
+                    }
+                "
+            />
+        </div>
     </nav>
 </template>
 
@@ -62,7 +81,6 @@ import loginfrom from './loginfrom.vue';
 import { computed, ref } from 'vue';
 import router from '../router';
 import { user } from '../store/user';
-import axios from '../https';
 export default {
     components: { loginfrom },
     setup() {
@@ -78,7 +96,6 @@ export default {
             userstore.removeToken();
             userstore.removeuserInfo();
         };
-        axios.get('/api/check/login');
         return { num, display, loginOut, userName, userEmail, router };
     },
 };

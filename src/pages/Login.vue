@@ -1,35 +1,32 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="loginContainer">
-        <navfrom style="position: absolute; width: 100%; z-index: 1" />
-        <div class="shell" style="z-index: 0">
-            <div id="a" class="image"></div>
-            <div class="heading">
-                <h1>这里是您的监控管家</h1>
-            </div>
-            <div class="text">
-                <h1>您可以通过管家查看珠海房价变换</h1>
-            </div>
-            <div id="b" class="image"></div>
-            <div class="heading">
-                <h1>欢迎您的到来</h1>
-            </div>
-            <div class="text">
-                <h1>您可以通过管家查看豆瓣电影评分变换</h1>
-            </div>
+    <div class="shell">
+        <div id="a" class="image"></div>
+        <div class="heading">
+            <h1>这里是您的监控管家</h1>
+        </div>
+        <div class="text">
+            <h1>您可以通过管家查看商品价格变换</h1>
+        </div>
+        <div id="b" class="image"></div>
+        <div class="heading">
+            <h1>欢迎您的到来</h1>
+        </div>
+        <div class="text">
+            <h1>您可以通过管家查看商品的统计数据</h1>
+        </div>
 
-            <div id="c" class="image"></div>
-            <div class="heading">
-                <h1>您可以监控微博用户</h1>
-            </div>
-            <div class="text">
-                <h1>您还能监控京东商品，并查看它的价格变换</h1>
-            </div>
+        <div id="c" class="image"></div>
+        <div class="heading">
+            <h1>您可以监控每一个商品</h1>
+        </div>
+        <div class="text">
+            <h1>您还能监控京东商品，并查看它的价格变换</h1>
+        </div>
 
-            <div id="d" class="image"></div>
-            <div class="heading">
-                <h1>谢谢您的使用</h1>
-            </div>
+        <div id="d" class="image"></div>
+        <div class="heading">
+            <h1>谢谢您的使用</h1>
         </div>
     </div>
 </template>

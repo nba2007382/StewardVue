@@ -12,7 +12,7 @@
             <div>
                 <ul v-if="list" style="display: flex">
                     <li
-                        v-for="item in list.data"
+                        v-for="item in list"
                         :key="item.id"
                         class="list move"
                         :Tm_id="item.id"

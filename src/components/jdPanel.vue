@@ -12,7 +12,7 @@
             <div>
                 <ul v-if="list" style="display: flex">
                     <li
-                        v-for="item in list.data"
+                        v-for="item in list"
                         :key="item.id"
                         class="list move"
                         :jd_id="item.id"
@@ -98,6 +98,8 @@ export default {
         let list = ref() as any;
         const getList = async () => {
             const data = await getJdGoods();
+            console.log(data);
+
             list.value = data;
         };
         getList();

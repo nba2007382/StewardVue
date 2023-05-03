@@ -141,6 +141,7 @@ import {
 import router from '../router';
 import axios from '../https';
 import { user } from '../store/user';
+import { userLogin, userRegister } from '../api/steward';
 export default {
     components: {
         Form,
@@ -158,16 +159,16 @@ export default {
         const handlelogin = async () => {
             const { valid } = await login.value.validate();
             if (valid == true) {
-                axios.post('/api/user/login', loginUser).then((res) => {
-                    const userstore = user();
-                    const { access_token, refresh_token, userInfo } = res.data;
-                    userstore.setToken({ access_token, refresh_token });
-                    userstore.setuserInfo(userInfo);
-                    const msg = res.data.message;
-                    alert(msg);
-                    router.go(0);
-                    return;
-                });
+                const { access_token, refresh_token, userInfo, message } =
+                    await userLogin(loginUser);
+                const userstore = user();
+                userstore.setToken({ access_token, refresh_token });
+                userstore.setuserInfo(userInfo);
+                const msg = message;
+                console.log(msg);
+                alert(msg);
+                router.go(0);
+                return;
             } else {
                 alert('提交错误，请从新提交');
                 return;
@@ -176,11 +177,10 @@ export default {
         const handleregister = async () => {
             const { valid } = await register.value.validate();
             if (valid == true) {
-                axios.post('/api/user/register', registerUser).then((res) => {
-                    const msg = res.data.message;
-                    alert(msg);
-                    return;
-                });
+                const { message } = await userRegister(registerUser);
+                const msg = message;
+                alert(msg);
+                return;
             } else {
                 alert('提交错误，请从新提交');
                 return;
