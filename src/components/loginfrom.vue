@@ -95,6 +95,37 @@
                             />
                             <label for="remember">记住 我</label>
                         </div>
+                        <div
+                            style="
+                                display: inline;
+                                white-space: nowrap;
+                                position: relative;
+                                left: -52px;
+                                top: 25px;
+                            "
+                        >
+                            <div>
+                                <input
+                                    id="admin"
+                                    v-model="loginUser.role"
+                                    type="radio"
+                                    name="role"
+                                    value="1"
+                                />
+                                <label for="admin">管理员登录</label>
+                            </div>
+                            <div>
+                                <input
+                                    id="user"
+                                    v-model="loginUser.role"
+                                    type="radio"
+                                    name="role"
+                                    value="0"
+                                />
+                                <label for="user">用户登录</label>
+                            </div>
+                        </div>
+
                         <button
                             type="button"
                             class="buttom sumbit"
@@ -159,6 +190,9 @@ export default {
         const handlelogin = async () => {
             const { valid } = await login.value.validate();
             if (valid == true) {
+                loginUser.role = parseInt(
+                    loginUser.role as unknown as string,
+                ) as 0 | 1;
                 const { access_token, refresh_token, userInfo, message } =
                     await userLogin(loginUser);
                 const userstore = user();

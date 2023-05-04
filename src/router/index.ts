@@ -42,6 +42,36 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import('../pages/Detail.vue'),
     },
+    {
+        path: '/manager/user',
+        name: 'UserManager',
+        meta: {
+            title: '用户管理',
+            keepAlive: true,
+            requireAuth: false,
+        },
+        component: () => import('../pages/UserManager.vue'),
+    },
+    {
+        path: '/manager/task',
+        name: 'TaskManager',
+        meta: {
+            title: '任务管理',
+            keepAlive: true,
+            requireAuth: false,
+        },
+        component: () => import('../pages/TaskManager.vue'),
+    },
+    {
+        path: '/craw',
+        name: 'Craw',
+        meta: {
+            title: '爬虫数据',
+            keepAlive: true,
+            requireAuth: false,
+        },
+        component: () => import('../pages/CrawView.vue'),
+    },
 ];
 
 const router = createRouter({

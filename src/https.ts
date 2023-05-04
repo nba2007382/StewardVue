@@ -97,7 +97,7 @@ function handleError(error) {
                 // 尝试刷新令牌
                 return axios({
                     method: 'put',
-                    url: '/api/authorizations/refreshToken',
+                    url: '/api/authorizations/refresh',
                     headers: {
                         Authorization: `Bearer ${userstore.tokenInfo.refresh_token}`,
                     },

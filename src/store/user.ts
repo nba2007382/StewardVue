@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 interface UserInfo {
     name: string | null;
     email: string | null;
+    role: 0 | 1;
 }
 interface TokenInfo {
     access_token: string | null;
@@ -14,6 +15,7 @@ const user = defineStore('userlogin', {
             userInfo: <UserInfo>{
                 name: localStorage.getItem('name'),
                 email: localStorage.getItem('email'),
+                role: 0,
             },
             tokenInfo: <TokenInfo>{
                 access_token: localStorage.getItem('access_token'),
@@ -28,6 +30,7 @@ const user = defineStore('userlogin', {
             this.userInfo.email = userInfo.email;
             localStorage.name = userInfo.name;
             localStorage.email = userInfo.email;
+            this.userInfo.role = userInfo.role ?? 0;
         },
 
         setToken(tokenInfo: TokenInfo) {

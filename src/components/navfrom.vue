@@ -5,11 +5,21 @@
             <el-menu-item index="1">
                 <router-link to="/">首页</router-link></el-menu-item
             >
-            <el-menu-item index="2"
+            <el-menu-item v-if="!isAdmin" index="2"
                 ><router-link to="/JD">京东</router-link></el-menu-item
             >
-            <el-menu-item index="3"
+            <el-menu-item v-if="!isAdmin" index="3"
                 ><router-link to="/TM">天猫</router-link></el-menu-item
+            >
+            <el-menu-item v-if="isAdmin" index="6"
+                ><router-link to="/manager/user"
+                    >用户管理</router-link
+                ></el-menu-item
+            >
+            <el-menu-item v-if="isAdmin" index="7"
+                ><router-link to="/manager/task"
+                    >任务管理</router-link
+                ></el-menu-item
             >
             <el-menu-item
                 v-if="!userEmail"
@@ -85,7 +95,7 @@ export default {
     components: { loginfrom },
     setup() {
         const userstore = user();
-
+        const isAdmin = ref(true);
         const userName = computed(() => userstore.userInfo.name);
         const userEmail = computed(() => userstore.userInfo.email);
         const num = ref(false);
@@ -96,7 +106,7 @@ export default {
             userstore.removeToken();
             userstore.removeuserInfo();
         };
-        return { num, display, loginOut, userName, userEmail, router };
+        return { num, display, loginOut, userName, userEmail, router, isAdmin };
     },
 };
 </script>
