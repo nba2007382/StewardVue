@@ -15,7 +15,7 @@ const user = defineStore('userlogin', {
             userInfo: <UserInfo>{
                 name: localStorage.getItem('name'),
                 email: localStorage.getItem('email'),
-                role: 0,
+                role: parseInt(localStorage.getItem('role')),
             },
             tokenInfo: <TokenInfo>{
                 access_token: localStorage.getItem('access_token'),
@@ -26,11 +26,14 @@ const user = defineStore('userlogin', {
     getters: {},
     actions: {
         setuserInfo(userInfo: UserInfo) {
+            console.log(userInfo);
+
             this.userInfo.name = userInfo.name;
             this.userInfo.email = userInfo.email;
+            this.userInfo.role = userInfo.role ?? 0;
             localStorage.name = userInfo.name;
             localStorage.email = userInfo.email;
-            this.userInfo.role = userInfo.role ?? 0;
+            localStorage.role = userInfo.role;
         },
 
         setToken(tokenInfo: TokenInfo) {

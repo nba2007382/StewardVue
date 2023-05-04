@@ -172,7 +172,7 @@ import {
 import router from '../router';
 import axios from '../https';
 import { user } from '../store/user';
-import { userLogin, userRegister } from '../api/steward';
+import { adminLogin, userLogin, userRegister } from '../api/steward';
 export default {
     components: {
         Form,
@@ -193,8 +193,14 @@ export default {
                 loginUser.role = parseInt(
                     loginUser.role as unknown as string,
                 ) as 0 | 1;
+                console.log(loginUser.role);
+
                 const { access_token, refresh_token, userInfo, message } =
-                    await userLogin(loginUser);
+                    loginUser.role === 0
+                        ? await userLogin(loginUser)
+                        : await adminLogin(loginUser);
+                console.log(access_token, refresh_token, userInfo, message);
+
                 const userstore = user();
                 userstore.setToken({ access_token, refresh_token });
                 userstore.setuserInfo(userInfo);

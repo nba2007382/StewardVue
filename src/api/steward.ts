@@ -1,6 +1,7 @@
 import axios from '../https';
 
 const url = {
+    adminLogin: '/api/admin/login',
     login: '/api/user/login',
     register: `/api/user/register`,
     userDel: `/api/user/del`,
@@ -70,6 +71,11 @@ export async function getUsers() {
 
 export async function userLogin(info) {
     const { data } = await axios.post(url.login, info);
+    return data;
+}
+
+export async function adminLogin(info) {
+    const { data } = await axios.post(url.adminLogin, info);
     return data;
 }
 

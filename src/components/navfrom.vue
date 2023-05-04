@@ -5,18 +5,18 @@
             <el-menu-item index="1">
                 <router-link to="/">首页</router-link></el-menu-item
             >
-            <el-menu-item v-if="!isAdmin" index="2"
+            <el-menu-item v-if="role !== 1" index="2"
                 ><router-link to="/JD">京东</router-link></el-menu-item
             >
-            <el-menu-item v-if="!isAdmin" index="3"
+            <el-menu-item v-if="role !== 1" index="3"
                 ><router-link to="/TM">天猫</router-link></el-menu-item
             >
-            <el-menu-item v-if="isAdmin" index="6"
+            <el-menu-item v-if="role === 1" index="6"
                 ><router-link to="/manager/user"
                     >用户管理</router-link
                 ></el-menu-item
             >
-            <el-menu-item v-if="isAdmin" index="7"
+            <el-menu-item v-if="role === 1" index="7"
                 ><router-link to="/manager/task"
                     >任务管理</router-link
                 ></el-menu-item
@@ -95,9 +95,9 @@ export default {
     components: { loginfrom },
     setup() {
         const userstore = user();
-        const isAdmin = ref(true);
         const userName = computed(() => userstore.userInfo.name);
         const userEmail = computed(() => userstore.userInfo.email);
+        const role = computed(() => userstore.userInfo.role);
         const num = ref(false);
         const display = () => {
             num.value = !num.value;
@@ -106,7 +106,7 @@ export default {
             userstore.removeToken();
             userstore.removeuserInfo();
         };
-        return { num, display, loginOut, userName, userEmail, router, isAdmin };
+        return { num, display, loginOut, userName, userEmail, router, role };
     },
 };
 </script>
